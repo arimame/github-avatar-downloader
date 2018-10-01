@@ -8,6 +8,9 @@ console.log('Welcome to the GitHub Avatar Downloader!');
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  if (repoOwner === undefined || repoName === undefined) {
+    console.log("Please enter the repo owner and repo name!")
+  } else {
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
@@ -19,13 +22,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request(options, function(err, res, body) {
     var data = JSON.parse(body);
      cb(err, data);
+
   });
+
+}
 }
 
 
 function downloadImageByURL(url, filePath) {
   request.get(url)
-    .on("erorr", function (err) {
+    .on("error", function (err) {
     throw err;
     })
     .on("response", function (response) {
